@@ -1,11 +1,14 @@
 # Pictionary
 Simple Pictionary gmae using node.js and socket.io
 
+#### SETUP:
+Install node
+
 To initialize package use npm install
 
-to run use node index.js
+To run use node index.js
 
-browse on 127.0.0.1:1234
+Browse on 127.0.0.1:1234
 
 #### TODO:
 Implement Player Logic
