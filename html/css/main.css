@@ -1,0 +1,46 @@
+#canvasDraw {
+            border: 1px solid #dedede;
+            cursor: crosshair;
+        }
+
+        .colorBlock {
+            height: 40;
+            width: 40;
+            border: 1px solid #6e6e6e;
+            cursor: pointer;
+            margin: 2px;
+        }
+
+        #container {
+            height: 500px;
+            width: 700px;
+        }
+
+        #colorPanel {
+            display: inline-block;
+            float: right;
+        }
+
+        #green {
+            background: green;
+        }
+
+        #blue {
+            background: blue;
+        }
+
+        #orange {
+            background: orange;
+        }
+
+        #red {
+            background: red;
+        }
+
+        #black {
+            background: black;
+        }
+
+        #yellow {
+            background: yellow;
+        }

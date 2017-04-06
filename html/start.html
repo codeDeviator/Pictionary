@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>Pictionary</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/socket.io.js"></script>
+    <script>
+        var socket = io.connect();
+    </script>
+    <script type="text/javascript" src="js/draw.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body onload="init()">
+    <h1>Draw Here</h1>
+    <div id="container" class="center-block">
+        <canvas id="canvasDraw" width="600" height="400"></canvas>
+        <div id="colorPanel">
+            <div>Choose Color</div>
+            <div id="green" class="colorBlock" onclick="callColor(this)"></div>
+            <div id="blue" class="colorBlock" onclick="callColor(this)"></div>
+            <div id="red" class="colorBlock" onclick="callColor(this)"></div>
+            <div id="yellow" class="colorBlock" onclick="callColor(this)"></div>
+            <div id="orange" class="colorBlock" onclick="callColor(this)"></div>
+            <div id="black" class="colorBlock" onclick="callColor(this)"></div>
+            <div>Eraser</div>
+            <div id="white" class="colorBlock" onclick="callColor(this)"></div>
+            <input type="button" value="clear" id="clr" size="23" onclick="callErase()">
+        </div>
+    </div>
+</body>
+
+</html>
