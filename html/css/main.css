@@ -1,6 +1,9 @@
 #canvasDraw {
             border: 1px solid #dedede;
             cursor: crosshair;
+            position: absolute;
+            top: 100px;
+            left: 20px;
         }
 
         .colorBlock {
@@ -18,7 +21,9 @@
 
         #colorPanel {
             display: inline-block;
-            float: right;
+            position: absolute;
+            top: 78px;
+            left: 635px;
         }
 
         #green {
