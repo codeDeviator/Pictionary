@@ -15,6 +15,6 @@ Implement Player Logic
 
 Implement Rooms
 
-Fix issue with different screen size
+~~Fix issue with different screen size~~
 
 Other graphic enhancements
