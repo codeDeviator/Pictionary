@@ -11,7 +11,11 @@ To run use node index.js
 Browse on 127.0.0.1:1234
 
 #### TODO:
-Implement Player Logic
+~~Implement Player Logic~~
+
+Improve player logic
+
+Add more intresting words in array.
 
 Implement Rooms
 
