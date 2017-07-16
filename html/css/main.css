@@ -1,51 +1,60 @@
 #canvasDraw {
-            border: 1px solid #dedede;
-            cursor: crosshair;
-            position: absolute;
-            top: 100px;
-            left: 20px;
-        }
+    border: 1px solid #dedede;
+    cursor: crosshair;
+    position: fixed;
+    left: 20px;
+    z-index: 3;
+    background-color: white;
+}
 
-        .colorBlock {
-            height: 40;
-            width: 40;
-            border: 1px solid #6e6e6e;
-            cursor: pointer;
-            margin: 2px;
-        }
+.alert{
+    margin-top:20px;
+}
 
-        #container {
-            height: 500px;
-            width: 700px;
-        }
+.colorBlock {
+    height: 40;
+    width: 40;
+    border: 1px solid #6e6e6e;
+    cursor: pointer;
+    margin: 2px;
+}
 
-        #colorPanel {
-            display: inline-block;
-            position: absolute;
-            top: 78px;
-            left: 635px;
-        }
+#container {
+    height: 500px;
+    width: 700px;
+}
 
-        #green {
-            background: green;
-        }
+#colorPanel {
+    display: inline-block;
+    position: fixed;
+    left: 635px;
+    z-index: 3;
+}
 
-        #blue {
-            background: blue;
-        }
+#green {
+    background: green;
+}
 
-        #orange {
-            background: orange;
-        }
+#blue {
+    background: blue;
+}
 
-        #red {
-            background: red;
-        }
+#orange {
+    background: orange;
+}
 
-        #black {
-            background: black;
-        }
+#red {
+    background: red;
+}
 
-        #yellow {
-            background: yellow;
-        }
+#black {
+    background: black;
+}
+
+#yellow {
+    background: yellow;
+}
+
+.disabled {
+    pointer-events: none;
+}

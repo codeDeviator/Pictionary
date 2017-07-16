@@ -9,10 +9,62 @@ var drawObject = {
     y: 2
 }
 
+
 var canvas, ctx;
+var playerId;
+
+
+
+var main = {};
 
 function init() {
+    main = new Vue({
+        el: '#main',
+        data: {
+            playerId: '',
+            playerList: [],
+            currentPlayer: '',
+            word: '',
+            guess: '',
+            rightGuess: '',
+            lost: '',
+            winner: '',
+        },
+        computed: {
+            isCurrentPlayer: function () {
+                return this.playerId == this.currentPlayer;
+            },
+            turnText: function () {
+                return this.currentPlayer + "'s turn";
+            },
+            enrichedPlayerList: function () {
+                var enrichedList = [];
+                this.playerList.forEach(function (player) {
+                    if (player == this.currentPlayer) {
+                        enrichedList.push({
+                            id: player,
+                            isPlaying: true
+                        });
+                    } else {
+                        enrichedList.push({
+                            id: player,
+                            isPlaying: false
+                        });
+                    }
+                }, this);
+                return enrichedList;
+            }
+        },
+        methods: {
+            checkAnswer: function () {
+                socket.emit("answer", main.guess);
+                this.rightGuess = false;
+            }
+        }
+    });
+
     canvas = document.getElementById('canvasDraw');
+    canvasContainer = document.getElementById('container');
     ctx = canvas.getContext("2d");
     ctx.lineWidth = drawObject.y;
     w = canvas.width;
@@ -74,12 +126,16 @@ function erase() {
 }
 
 function findxy(res, e) {
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = canvas.width / rect.width;
+    var scaleY = canvas.height / rect.height;
     if (res == 'down') {
-        drawObject.prevX = drawObject.currX;
-        drawObject.prevY = drawObject.currY;
-        drawObject.currX = e.clientX - canvas.offsetLeft;
-        drawObject.currY = e.clientY - canvas.offsetTop;
-
+        drawObject.prevX = (drawObject.prevOffsetX - rect.left) * scaleX;
+        drawObject.prevY = (drawObject.prevOffsetY - rect.top) * scaleY;
+        drawObject.prevOffsetX = e.clientX;
+        drawObject.prevOffsetY = e.clientY;
+        drawObject.currX = (e.clientX - rect.left) * scaleX;
+        drawObject.currY = (e.clientY - rect.top) * scaleY;
         drawObject.flag = true;
         drawObject.dot_flag = true;
         if (drawObject.dot_flag) {
@@ -95,10 +151,12 @@ function findxy(res, e) {
     }
     if (res == 'move') {
         if (drawObject.flag) {
-            drawObject.prevX = drawObject.currX;
-            drawObject.prevY = drawObject.currY;
-            drawObject.currX = e.clientX - canvas.offsetLeft;
-            drawObject.currY = e.clientY - canvas.offsetTop;
+            drawObject.prevX = (drawObject.prevOffsetX - rect.left) * scaleX;
+            drawObject.prevY = (drawObject.prevOffsetY - rect.top) * scaleY;
+            drawObject.prevOffsetX = e.clientX;
+            drawObject.prevOffsetY = e.clientY;
+            drawObject.currX = (e.clientX - rect.left) * scaleX;
+            drawObject.currY = (e.clientY - rect.top) * scaleY;
             draw();
         }
     }
@@ -116,4 +174,41 @@ socket.on("drawSer", function (obj) {
 
 socket.on("clearSer", function () {
     erase();
+})
+
+socket.on("playerSelect", function (id) {
+    main.currentPlayer = id;
+    main.rightGuess = false;
+    main.lost = false;
+    main.winner = '';
+    if (id == playerId) {
+        $("#canvasDraw").removeClass("disabled");
+    } else {
+        $("#canvasDraw").addClass("disabled");
+    }
+})
+
+socket.on("playerListChange", function (players) {
+    main.playerList = players;
+    main.word = '';
+});
+
+socket.on("getPlayerId", function (id) {
+    playerId = id;
+    main.playerId = id;
+})
+
+socket.on("getWord", function (word) {
+    main.word = word;
+})
+
+socket.on("getWinner", function (winner) {
+    console.log(main.playerId + "=" + winner);
+    if (main.playerId == winner) {
+        main.rightGuess = true;
+        main.winner = winner;
+    } else {
+        main.lost = true;
+        main.winner = winner;
+    }
 })

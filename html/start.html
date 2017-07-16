@@ -6,6 +6,7 @@
     <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/socket.io.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
     <script>
         var socket = io.connect();
     </script>
@@ -15,21 +16,47 @@
 </head>
 
 <body onload="init()">
-    <h1>Draw Here</h1>
-    <div id="container" class="center-block">
-        <canvas id="canvasDraw" width="600" height="400"></canvas>
-        <div id="colorPanel">
-            <div>Choose Color</div>
-            <div id="green" class="colorBlock" onclick="callColor(this)"></div>
-            <div id="blue" class="colorBlock" onclick="callColor(this)"></div>
-            <div id="red" class="colorBlock" onclick="callColor(this)"></div>
-            <div id="yellow" class="colorBlock" onclick="callColor(this)"></div>
-            <div id="orange" class="colorBlock" onclick="callColor(this)"></div>
-            <div id="black" class="colorBlock" onclick="callColor(this)"></div>
-            <div>Eraser</div>
-            <div id="white" class="colorBlock" onclick="callColor(this)"></div>
-            <input type="button" value="clear" id="clr" size="23" onclick="callErase()">
+    <div id="main">
+        <h1>Draw Here</h1>
+        <div id="container" class="col-md-7">
+            <canvas id="canvasDraw" width="600" height="400"></canvas>
+            <div id="colorPanel" v-if="isCurrentPlayer">
+                <div>Choose Color</div>
+                <div id="green" class="colorBlock" onclick="callColor(this)"></div>
+                <div id="blue" class="colorBlock" onclick="callColor(this)"></div>
+                <div id="red" class="colorBlock" onclick="callColor(this)"></div>
+                <div id="yellow" class="colorBlock" onclick="callColor(this)"></div>
+                <div id="orange" class="colorBlock" onclick="callColor(this)"></div>
+                <div id="black" class="colorBlock" onclick="callColor(this)"></div>
+                <div>Eraser</div>
+                <div id="white" class="colorBlock" onclick="callColor(this)"></div>
+                <input type="button" value="clear" id="clr" size="23" onclick="callErase()">
+            </div>
         </div>
+        <div class="col-md-5" id="playerList">
+            <ul class="list-group col-md-12">
+                <li class="list-group-item" v-for="player in enrichedPlayerList" v-bind:class="{ active: player.isPlaying }">{{player.id}}</li>
+            </ul>
+        </div>
+        <div class="col-md-5" v-if="!isCurrentPlayer">
+            <div class="form-group">
+                <label class="control-label">Answer : </label>
+                <input class="form-control" v-model="guess"></input>
+            </div>
+            <button class="btn btn-active" v-on:click="checkAnswer">Guess!</button>
+        </div>
+        <div class="alert alert-success col-md-5" v-if="rightGuess && !isCurrentPlayer">
+            You <strong>WON!</strong>
+        </div>
+        <div class="alert alert-danger col-md-5" v-if="!rightGuess && !isCurrentPlayer">
+            Wrong Guess
+        </div>
+        <div class="alert alert-danger col-md-5" v-if="lost && winner && !isCurrentPlayer">
+            You lost, the winner is {{winner}}
+        </div>
+        <p class="col-md-12" v-if="isCurrentPlayer">{{word}}</p>
+        <p id="name" class="col-md-12">Your Id : {{playerId}}</p>
+        <p id="turnIndicator" class="col-md-12">{{turnText}}</p>
     </div>
 </body>
 
