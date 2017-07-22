@@ -13,9 +13,11 @@ Browse on 127.0.0.1:1234
 #### TODO:
 ~~Implement Player Logic~~
 
-Improve player logic
+~~Improve player logic~~
 
-Add more intresting words in array.
+Add Aliasing
+
+~~Add more intresting words in array.~~
 
 Implement Rooms
 
