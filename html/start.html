@@ -32,31 +32,52 @@
                 <div id="white" class="colorBlock" onclick="callColor(this)"></div>
                 <input type="button" value="clear" id="clr" size="23" onclick="callErase()">
             </div>
+            <div class="playerArea">
+                <div class="col-md-12" v-if="canStart && !isReady">
+                    <button class="btn btn-success" v-on:click="ready">Start Game</button>
+                </div>
+                <p class="col-md-12">{{currentScorePoints}}</p>
+                <p class="col-md-12" v-if="isCurrentPlayer">{{word}}</p>
+                <p id="name" class="col-md-12">Your Id : {{playerId}}</p>
+                <p id="turnIndicator" class="col-md-12">{{turnText}}</p>
+            </div>
         </div>
         <div class="col-md-5" id="playerList">
-            <ul class="list-group col-md-12">
-                <li class="list-group-item" v-for="player in enrichedPlayerList" v-bind:class="{ active: player.isPlaying }">{{player.id}}</li>
-            </ul>
+            <table class="table">
+                <thead>
+                    <th>Player</th>
+                    <th>Score</th>
+                </thead>
+                <tr v-for="player in enrichedPlayerList" v-bind:class="{ active: player.isPlaying, success: player.isReady&&!player.isPlaying  }">
+                    <td>{{player.id}}</td>
+                    <td>{{player.totalScore}}</td>
+                </tr>
+            </table>
         </div>
-        <div class="col-md-5" v-if="!isCurrentPlayer">
+        <div class="col-md-5" v-if="!isCurrentPlayer && isReady">
             <div class="form-group">
                 <label class="control-label">Answer : </label>
                 <input class="form-control" v-model="guess"></input>
             </div>
             <button class="btn btn-active" v-on:click="checkAnswer">Guess!</button>
         </div>
-        <div class="alert alert-success col-md-5" v-if="rightGuess && !isCurrentPlayer">
-            You <strong>WON!</strong>
+        <div class="col-md-5">
+            <div class="alert alert-success col-md-12" v-if="rightGuess && !isCurrentPlayer && isReady">
+                You <strong>WON!</strong>, your score is {{winnerScorePoints}}
+            </div>
+            <div class="alert alert-success col-md-12" v-if="isCurrentPlayer && winner && isReady">
+                You <strong>WON!</strong>,{{winner}} guessed the word, your score is {{winnerScorePoints}}
+            </div>
+            <div class="alert alert-danger col-md-12" v-if="!rightGuess && !isCurrentPlayer && isReady">
+                Wrong Guess
+            </div>
+            <div class="alert alert-danger col-md-12" v-if="lost && winner && !isCurrentPlayer && isReady">
+                You lost, the winner is {{winner}} with {{winnerScorePoints}}, the word was {{word}}
+            </div>
+            <div class="alert alert-danger col-md-12" v-if="lost && winner=='' && isReady">
+                You lost, No one guessed the wrod, the word was {{word}}
+            </div>
         </div>
-        <div class="alert alert-danger col-md-5" v-if="!rightGuess && !isCurrentPlayer">
-            Wrong Guess
-        </div>
-        <div class="alert alert-danger col-md-5" v-if="lost && winner && !isCurrentPlayer">
-            You lost, the winner is {{winner}}
-        </div>
-        <p class="col-md-12" v-if="isCurrentPlayer">{{word}}</p>
-        <p id="name" class="col-md-12">Your Id : {{playerId}}</p>
-        <p id="turnIndicator" class="col-md-12">{{turnText}}</p>
     </div>
 </body>
 

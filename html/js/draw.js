@@ -14,7 +14,6 @@ var canvas, ctx;
 var playerId;
 
 
-
 var main = {};
 
 function init() {
@@ -29,6 +28,10 @@ function init() {
             rightGuess: '',
             lost: '',
             winner: '',
+            currentScorePoints: 120,
+            winnerScorePoints: 0,
+            scoreInterval: '',
+            isReady: false
         },
         computed: {
             isCurrentPlayer: function () {
@@ -37,18 +40,25 @@ function init() {
             turnText: function () {
                 return this.currentPlayer + "'s turn";
             },
+            canStart: function () {
+                return this.enrichedPlayerList.length > 2;
+            },
             enrichedPlayerList: function () {
                 var enrichedList = [];
                 this.playerList.forEach(function (player) {
-                    if (player == this.currentPlayer) {
+                    if (player.id == this.currentPlayer) {
                         enrichedList.push({
-                            id: player,
-                            isPlaying: true
+                            id: player.id,
+                            isPlaying: true,
+                            totalScore: player.totalScore,
+                            isReady: player.isReady
                         });
                     } else {
                         enrichedList.push({
-                            id: player,
-                            isPlaying: false
+                            id: player.id,
+                            isPlaying: false,
+                            totalScore: player.totalScore,
+                            isReady: player.isReady
                         });
                     }
                 }, this);
@@ -59,6 +69,19 @@ function init() {
             checkAnswer: function () {
                 socket.emit("answer", main.guess);
                 this.rightGuess = false;
+            },
+            reduceScorePoints: function () {
+                self = this;
+                self.scoreInterval = setInterval(function () {
+                    self.currentScorePoints--;
+                    if (self.currentScorePoints == 0)
+                        clearInterval(self.scoreInterval);
+                }, 1000);
+            },
+            ready: function () {
+                var self = this;
+                self.isReady = true;
+                socket.emit("playerReady");
             }
         }
     });
@@ -181,16 +204,19 @@ socket.on("playerSelect", function (id) {
     main.rightGuess = false;
     main.lost = false;
     main.winner = '';
+    main.currentScorePoints = 120;
+    clearInterval(main.scoreInterval);
     if (id == playerId) {
         $("#canvasDraw").removeClass("disabled");
     } else {
         $("#canvasDraw").addClass("disabled");
+        main.word = '';
     }
+    main.reduceScorePoints();
 })
 
 socket.on("playerListChange", function (players) {
     main.playerList = players;
-    main.word = '';
 });
 
 socket.on("getPlayerId", function (id) {
@@ -202,13 +228,41 @@ socket.on("getWord", function (word) {
     main.word = word;
 })
 
-socket.on("getWinner", function (winner) {
-    console.log(main.playerId + "=" + winner);
-    if (main.playerId == winner) {
+socket.on("gameOver", function (word) {
+    main.word = word;
+    main.lost = true;
+    main.winner = "";
+    setTimeout(function () {
+        main.isReady = false;
+        main.winner = "";
+        main.lost = false;
+        main.word = "";
+        main.rightGuess = false;
+        main.currentPlayer = "";
+    }, 5000);
+})
+
+socket.on("getWinner", function (obj) {
+    if (main.playerId == obj.winner) {
         main.rightGuess = true;
-        main.winner = winner;
     } else {
         main.lost = true;
-        main.winner = winner;
+        main.word = obj.word
     }
-})
+    main.winner = obj.winner;
+    main.winnerScorePoints = obj.score;
+    clearInterval(main.scoreInterval);
+    setTimeout(function () {
+        main.isReady = false;
+        main.winner = "";
+        main.lost = false;
+        main.word = "";
+        main.rightGuess = false;
+        main.currentPlayer = "";
+    }, 5000);
+});
+
+socket.on("Restrict", function (data) {
+    main.isReady = false;
+    alert("A game in progress, please wait for it to complete.");
+});

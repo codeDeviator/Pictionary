@@ -7,8 +7,8 @@
     background-color: white;
 }
 
-.alert{
-    margin-top:20px;
+.alert {
+    margin-top: 20px;
 }
 
 .colorBlock {
@@ -20,8 +20,8 @@
 }
 
 #container {
-    height: 500px;
     width: 700px;
+    height: 100%;
 }
 
 #colorPanel {
@@ -29,6 +29,11 @@
     position: fixed;
     left: 635px;
     z-index: 3;
+}
+
+.playerArea {
+    position: absolute;
+    top: 450px;
 }
 
 #green {
