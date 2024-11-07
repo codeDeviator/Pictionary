@@ -14,12 +14,13 @@ var canvas, ctx;
 var playerId;
 
 
-var main = {};
 
-function init() {
+
+
     main = new Vue({
         el: '#main',
         data: {
+            isGuessed:false,
             playerId: '',
             playerList: [],
             currentPlayer: '',
@@ -69,6 +70,7 @@ function init() {
             checkAnswer: function () {
                 socket.emit("answer", main.guess);
                 this.rightGuess = false;
+                this.isGuessed = true
             },
             reduceScorePoints: function () {
                 self = this;
@@ -105,7 +107,7 @@ function init() {
     canvas.addEventListener("mouseout", function (e) {
         callfindxy('out', e)
     }, false);
-}
+
 
 function callfindxy(res, e) {
     socket.emit("drawCli", {
@@ -232,6 +234,7 @@ socket.on("gameOver", function (word) {
     main.word = word;
     main.lost = true;
     main.winner = "";
+    main.isGuessed=false
     setTimeout(function () {
         main.isReady = false;
         main.winner = "";

@@ -10,12 +10,12 @@
     <script>
         var socket = io.connect();
     </script>
-    <script type="text/javascript" src="js/draw.js"></script>
+    <script type="text/javascript" src="js/draw.js" defer></script>
     <link rel="stylesheet" href="css/main.css">
 
 </head>
 
-<body onload="init()">
+<body >
     <div id="main">
         <h1>Draw Here</h1>
         <div id="container" class="col-md-7">
@@ -68,7 +68,7 @@
             <div class="alert alert-success col-md-12" v-if="isCurrentPlayer && winner && isReady">
                 You <strong>WON!</strong>,{{winner}} guessed the word, your score is {{winnerScorePoints}}
             </div>
-            <div class="alert alert-danger col-md-12" v-if="!rightGuess && !isCurrentPlayer && isReady">
+            <div class="alert alert-danger col-md-12" v-if="!rightGuess && !isCurrentPlayer && isReady && isGuessed">
                 Wrong Guess
             </div>
             <div class="alert alert-danger col-md-12" v-if="lost && winner && !isCurrentPlayer && isReady">
