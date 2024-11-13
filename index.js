@@ -16,7 +16,9 @@ app.get("/", function (req, res) {
     res.sendFile(__dirname + '/html/start.html');
 });
 var chosenWord = "";
-server.listen(1234,"0.0.0.0");
+server.listen(1234,"0.0.0.0",()=>{
+    console.log("server is listening http://localhost:1234")
+});
 
 function ChoosePlayer(sockets) {
     var  randomNumber= Math.floor(Math.random()*connections.length)
