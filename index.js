@@ -16,15 +16,14 @@ app.get("/", function (req, res) {
     res.sendFile(__dirname + '/html/start.html');
 });
 var chosenWord = "";
-server.listen(1234);
+server.listen(1234,"0.0.0.0");
 
 function ChoosePlayer(sockets) {
-    var result;
-    var count = 0;
-    for (var socket in sockets)
-        if (Math.random() < 1 / ++count)
-            result = socket;
-    return result;
+    var  randomNumber= Math.floor(Math.random()*connections.length)
+    console.log(randomNumber);
+    var result=connections[randomNumber]
+
+        return result;
 }
 
 function ChooseWord() {
@@ -70,6 +69,7 @@ io.sockets.on("connection", function (socket) {
     connections.push(socket);
     socket.score = 0;
     socket.isReady = false;
+    
     io.sockets.sockets[socket.id].emit("getPlayerId", socket.id);
     io.sockets.emit("playerListChange", formPlayerObjectArray(io.sockets.sockets));
     //console.draft('%s connected', connections.length);

@@ -17,7 +17,7 @@ var playerId;
 
 
 
-    main = new Vue({
+main = new Vue({
         el: '#main',
         data: {
             isGuessed:false,
