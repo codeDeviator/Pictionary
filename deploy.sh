@@ -45,9 +45,37 @@ clone_repo(){
     cd "$clone_dir"
     # installing all the npm packages
     npm i
+
+    # Terminate any existing instance of node index.js
+    if pgrep -f "node index.js" > /dev/null; then
+    echo "Stopping the previous instance of node index.js..."
+    pkill -f "node index.js"
+    sleep 2  # Wait a moment to ensure the process has stopped
+    fi
+
     # executing the index.js file using nodejs
-    node index.js 
+    node index.js &
+    # wait a few seconds to allow the server to start
+    sleep 5
+
 }
+
+# Function to test application is running or not
+check_app(){
+    # Check if index.js is running
+    if pgrep -f "node index.js" > /dev/null; then
+    # Check if the port 3000 is open
+    if nc -z localhost 1234; then
+    echo "Application is running successfully on port 1234."
+    else
+    echo "Application failed to start on port 1234."
+    fi
+    else
+    echo "Application failed to start."
+    fi
+  
+}
+
 
 
 # to check and install nodejs
@@ -59,3 +87,5 @@ check_git
 # to clone the github repo  and starts the server
 clone_repo
 
+# to application is running or not
+check_app
