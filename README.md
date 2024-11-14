@@ -1,5 +1,5 @@
 # Pictionary
-Simple Pictionary gmae using node.js and socket.io
+Simple Pictionary game using node.js, express, vuejs, bootstrap and socket.io
 
 You can use bash script to deploy this application on your local server.  
 <a href="./deploy.sh">Go to deploy.sh</a>
