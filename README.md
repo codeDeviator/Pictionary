@@ -4,7 +4,7 @@ Simple Pictionary game using node.js, express, vuejs, bootstrap and socket.io
 You can use bash script to deploy this application on your local server.  
 <a href="./deploy.sh">Go to deploy.sh</a>
 
-Instruction  for using the script
+## Instruction  for using the script
 1. You need to download the file by clicking on **Go to deploy.sh**, you will be navigated to depoly.sh file page and then click on icon as shown in the image below.  
 <img src="./deploy.png"/>  
 

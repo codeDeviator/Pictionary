@@ -62,19 +62,13 @@ clone_repo(){
 }
 
 # Function to test application is running or not
-check_app(){
-    # Check if index.js is running
-    if pgrep -f "node index.js" > /dev/null; then
-    # Check if the port 3000 is open
+check_app(){ 
+    # Check if the port 1234 is open
     if nc -z localhost 1234; then
     echo "Application is running successfully on port 1234."
     else
     echo "Application failed to start on port 1234."
     fi
-    else
-    echo "Application failed to start."
-    fi
-  
 }
 
 
