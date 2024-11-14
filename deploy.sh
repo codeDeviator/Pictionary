@@ -44,7 +44,8 @@ clone_repo(){
     # changing working drectory to clone_dir
     cd "$clone_dir"
     # installing all the npm packages
-    npm i > /dev/null
+    npm i > /dev/null 2>&1
+
 
     # Terminate any existing instance of node index.js
     if pgrep -f "node index.js" > /dev/null; then
