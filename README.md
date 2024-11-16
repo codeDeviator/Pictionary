@@ -1,14 +1,15 @@
 # Pictionary
 Simple Pictionary game using node.js, express, vuejs, bootstrap and socket.io
 
----
+
+<br>
 
 ## How To Deploy The Appicaltion 
 You can use **bash script** to deploy this application on your local server.  
 <a href="./deploy.sh">Go to deploy.sh</a>
 
 ### Instruction  for using the bash script
-
+---
 1. You need to download the file by clicking on **Go to deploy.sh**, you will be navigated to depoly.sh file page and then click on icon as shown in the image below.  
 <img src="./deploy.png"/>  
 
@@ -19,16 +20,18 @@ You can use **bash script** to deploy this application on your local server.
 4. Now just put this in your terminal -->  **./deploy.sh**  
 
 
-
+<br>
 
 ## How to Use This Application
 ### **Homepage**
+
 - Open the browser and navigate to `http://localhost:1234/`.
 - The homepage will appear for each user when they enter the URL.
 
-
+---
 
 ### **Starting the Game**
+
 - **Accessing the Homepage:**
   - First user accesses the application homepage via the URL.
   - Subsequent users can access the homepage using the same URL.
@@ -85,4 +88,3 @@ You can use **bash script** to deploy this application on your local server.
 
 ---
 
-This guide provides a comprehensive overview of how to use and enjoy the Pictionary application!
