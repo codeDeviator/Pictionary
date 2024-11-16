@@ -46,9 +46,7 @@ clone_repo(){
     clone_dir="Pictionary"
     rm -rf "$clone_dir"
     echo "Cloning the repository from $repo_url..."
-    git clone "$repo_url" > /dev/null 2&1
-    cd "$clone_dir"
-    npm i > /dev/null 2>&1
+    git clone "$repo_url" > /dev/null 2>&1
 }
 
 # Function to check if a port is busy
@@ -67,6 +65,7 @@ check_port() {
 start_app(){
     check_port || exit 1  # Exit if the port is busy
     cd "Pictionary" || { echo "Repository directory not found!"; exit 1; }
+    npm i > /dev/null 2>&1
     node index.js &
     sleep 5
 }
