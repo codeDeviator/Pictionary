@@ -78,7 +78,7 @@ You can use **bash script** to deploy this application on your local server.
 
 #### **Restrictions**
 - **Joining During an Active Game:**
-  - New users attempting to join during an active game will see an alert: *"A game in progress, please wait for it to complete."*
+  - New users attempting to join during an active game will see an alert: **"A game in progress, please wait for it to complete."**
 
 ---
 
