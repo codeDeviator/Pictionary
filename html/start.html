@@ -48,7 +48,7 @@
                     <th>Player</th>
                     <th>Score</th>
                 </thead>
-                <tr v-for="player in enrichedPlayerList" v-bind:class="{ active: player.isPlaying, success: player.isReady&&!player.isPlaying  }">
+                <tr v-for="player in enrichedPlayerList" v-bind:class="{ active: player.isPlaying, success: player.isReady && !player.isPlaying  }">
                     <td>{{player.id}}</td>
                     <td>{{player.totalScore}}</td>
                 </tr>

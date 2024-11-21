@@ -25,7 +25,7 @@ function ChoosePlayer(sockets) {
     console.log(randomNumber);
     var result=connections[randomNumber]
 
-        return result;
+        return result.id;
 }
 
 function ChooseWord() {

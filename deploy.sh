@@ -48,7 +48,9 @@ clone_repo(){
     echo "Cloning the repository from $repo_url..."
     git clone "$repo_url" > /dev/null 2>&1
 }
-
+Share this experience
+Accessibility links
+Skip to main content
 # Function to check if a port is busy
 check_port() {
     local port=1234
