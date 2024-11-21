@@ -20,7 +20,7 @@ You can use **bash script** to deploy this application on your local server.
 
 <br>
 
-## How to Use This Application
+## How To Use This Application
 ### **Homepage**
 
 - Open the browser and navigate to `http://localhost:1234/`.
