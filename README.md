@@ -37,7 +37,7 @@ You can use **bash script** to deploy this application on your local server.
 - **Start Game Button:**
   - Visible to all users who have joined the homepage.
   - Atleast three users are needed to accessing the homepage,only then start game will appear to everyone.
-  - Click the "Ready" button to begin the game.
+  - All users clicks on the "Ready" button to start the game.
 
 ---
 
@@ -57,21 +57,22 @@ You can use **bash script** to deploy this application on your local server.
 
 4. **Erasing:**
    - Choosen user can use the eraser tool (white box labeled "Eraser") to remove parts of the drawing.
-   -  First click on the the eraser white box then hold and move the mouse over the areas you want to erase.
+   - Chossen clicks on the the eraser white box then hold and move the mouse over the areas you want to erase.
 
 5. **Clearing the Drawing Area:**
-   - Click the "Clear" button on the homepage to erase the entire drawing area.
+   - Choosen user clicks on the "Clear" button on the homepage to erase the entire drawing area.
 
 ---
 
 ### **Guessing the Word**
 - Non-drawing users can enter their guesses into the input box.
+- Non-drawing users click on guess button to check if their guess is correct or not.
 - **Wrong Guess:**
   - A **"Wrong Guess"** message appears if the guess is incorrect.
 - **Correct Guess:**
   - A **"You Won"** message appears, and points are added to:
-    - The user who guessed correctly.
-    - The user whose turn it was to draw.
+    - None-Drawing user who guessed correctly.
+    - Choosen user whose turn it was to draw.
 
 ---
 
