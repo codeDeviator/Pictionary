@@ -1,5 +1,5 @@
 # Pictionary
-Simple Pictionary Application built using **node.js**, **express.js**, **vue.js**, **bootstrap** and **socket.io.js**.
+Simple Pictionary Application built using <a href="https://nodejs.org/en">**node.js**</a>, <a href="https://expressjs.com/"> **express.js**</a>, <a href="https://vuejs.org/">**vue.js** </a>, <a href="https://getbootstrap.com/"> **bootstrap**</a> and <a href="https://socket.io/">**socket.io.js**</a>.
 
 
 ## How To Deploy The Appicaltion 
