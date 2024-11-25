@@ -3,7 +3,7 @@ Simple Pictionary Application built using <a href="https://nodejs.org/en" target
 
 
 ## How To Deploy The Appicaltion 
-You can use **bash script** to deploy this application on your local server.  
+You can use my **bash script** to deploy this application on your local server.  
 <a href="./deploy.sh">Go to deploy.sh</a>
 
 ### Instructions  for using the bash script
