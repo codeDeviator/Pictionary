@@ -1,111 +1,56 @@
 #!/bin/bash
 
-# Function to check if Node.js is installed
-check_nodejs() {
-    
-    echo "checking if nodejs is installed or not ?"
+# Step 1: Update the system
+echo "Updating system..."
+sudo apt-get update -y
 
-    if which node > /dev/null 2>&1; then
-    
-        echo "Node.js is already installed."
-        echo -n "node version -- " 
-        node -v
-    else
-        echo "Node.js is not installed."
-        echo "Installing Node.js..."
-        sudo apt update > /dev/null 2>&1
-        sudo apt install -y nodejs npm > /dev/null 2>&1
-        echo "Node.js installation completed."
-        echo -n "node version -- " 
-        node -v
-    fi
-}
+# Step 2: Install curl (needed for nvm installation)
+echo "Installing curl..."
+sudo apt-get install curl -y
 
-# Function to check if Git is installed
-check_git() {
-    if which git > /dev/null 2>&1; then
-        echo "Git is already installed."
-        echo -n "git version -- " 
-        git --version
-    else
-        echo "Git is not installed."
-        echo "Installing Git..."
-        sudo apt update > /dev/null 2>&1
-        sudo apt install -y git > /dev/null 2>&1
-        echo "Git installation completed."
-        echo -n "git version -- " 
-        git --version
-    fi
-}
+echo "Installing git..."
+sudo apt-get install git -y
+
+# Step 3: Install NVM (Node Version Manager)
+echo "Installing NVM..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+
+# Step 4: Load NVM into the current session
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This line sources NVM for current session
+
+# Step 5: Install Node.js and npm via NVM
+NODE_VERSION="18"  # Set the Node.js version you want to install
+echo "Installing Node.js version $NODE_VERSION using NVM..."
+nvm install $NODE_VERSION
+nvm use $NODE_VERSION
+nvm alias default $NODE_VERSION
+
+# Confirm Node.js and npm installation
+node -v
+npm -v
+
+# Step 6: Search for the repository using 'find'
+echo "Searching the system for the repository Linux_Crossword-Puzzle..."
+REPO_PATH=$(find / -type d -name "Linux_Crossword-Puzzle" 2>/dev/null)
+
+if [ -z "$REPO_PATH" ]; then
+  echo "Repository not found on the system. Cloning the Linux Crossword Puzzle repository..."
+  git clone https://github.com/codeDeviator/Linux_Crossword-Puzzle.git
+  cd Linux_Crossword-Puzzle
+else
+  echo "Repository found at: $REPO_PATH"
+  cd "$REPO_PATH"
+fi
 
 
+# Step 8: Install project dependencies
+echo "Installing project dependencies..."
+npm install
 
-# Function to clone the GitHub repository
-clone_repo(){  
-    repo_url="https://github.com/coder-shubham-bisht/Pictionary"
-    clone_dir="Pictionary"
-    rm -rf "$clone_dir"
-    echo "Cloning the repository from $repo_url..."
-    git clone "$repo_url" > /dev/null 2>&1
-}
-Share this experience
-Accessibility links
-Skip to main content
-# Function to check if a port is busy
-check_port() {
-    local port=1234
-    if lsof -i :"$port" > /dev/null 2>&1; then
-        echo "Port $port is already in use. Cannot start the application."
-        return 1  # Indicate the port is busy
-    else
-        echo "Port $port is available."
-        return 0  # Indicate the port is free
-    fi
-}
+# Step 9: Start the application server
+echo "Starting the crossword app server..."
+npm start &
 
-# Function to start the application
-start_app(){
-    check_port || exit 1  # Exit if the port is busy
-    cd "Pictionary" || { echo "Repository directory not found!"; exit 1; }
-    npm i > /dev/null 2>&1
-    node index.js &
-    sleep 5
-}
-
-# Function to test if the application is running
-check_app(){ 
-    if nc -z localhost 1234; then
-        echo "Application is running successfully on port 1234."
-    else
-        echo "Application failed to start on port 1234."
-    fi
-}
-
-# Get user input
-echo "Select an option:"
-echo "1. Full Deploy (Install all the tools, clone repo, start application)"
-echo "2. Start Application (dependencies are already installed and repo is cloned)"
-read -p "Enter your choice (1 or 2): " choice
-
-case $choice in
-    1)
-        echo "Performing Full Deploy..."
-        check_nodejs
-        check_git
-        clone_repo
-        start_app
-        check_app
-        ;;
-    2)
-        echo "Starting Application..."
-        check_nodejs
-        check_git
-        start_app
-        check_app
-        ;;
-    *)
-        echo "Invalid choice. Please run the script again and choose either 1 or 2."
-        exit 1
-        ;;
-esac
-
+# Step 10: Display a success message
+echo "The Linux crossword app server has started! You can now play the crossword game."
